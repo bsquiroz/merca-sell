@@ -6,6 +6,9 @@ import * as z from "zod";
 import { Button } from "@/components/ui/button";
 import { toast } from "@/components/ui/toast";
 import Input from "../../components/common/Input/Input.vue";
+import { useAuthStore } from "@/store/auth";
+
+const authStore = useAuthStore();
 
 const formSchema = toTypedSchema(
   z.object({
@@ -19,7 +22,7 @@ const { handleSubmit } = useForm({
 });
 
 const onSubmit = handleSubmit((values) => {
-  console.log(values);
+  authStore.signIn(values.username, values.password);
 
   toast({
     title: "Your credentials corrects",
