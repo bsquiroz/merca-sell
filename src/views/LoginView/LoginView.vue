@@ -4,16 +4,8 @@ import { toTypedSchema } from "@vee-validate/zod";
 import * as z from "zod";
 
 import { Button } from "@/components/ui/button";
-import {
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
 import { toast } from "@/components/ui/toast";
+import Input from "../../components/common/Input/Input.vue";
 
 const formSchema = toTypedSchema(
   z.object({
@@ -37,27 +29,22 @@ const onSubmit = handleSubmit((values) => {
 
 <template>
   <form class="w-2/3 space-y-6 m-auto" @submit="onSubmit">
-    <FormField v-slot="{ componentField }" name="username">
-      <FormItem v-auto-animate>
-        <FormLabel>Username</FormLabel>
-        <FormControl>
-          <Input type="text" placeholder="shadcn" v-bind="componentField" />
-        </FormControl>
-        <FormDescription> This is your public display name. </FormDescription>
-        <FormMessage />
-      </FormItem>
-    </FormField>
+    <Input
+      name="username"
+      label="Usuario"
+      placeholder="Bsquiroz"
+      type="text"
+      desc="Aqui va tu usuario con el que te registraste"
+    />
 
-    <FormField v-slot="{ componentField }" name="password">
-      <FormItem v-auto-animate>
-        <FormLabel>Password</FormLabel>
-        <FormControl>
-          <Input type="password" placeholder="***" v-bind="componentField" />
-        </FormControl>
-        <FormDescription> This is your secret password. </FormDescription>
-        <FormMessage />
-      </FormItem>
-    </FormField>
-    <Button type="submit" class="w-full"> Login </Button>
+    <Input
+      name="password"
+      label="Contraseña"
+      placeholder="***"
+      type="password"
+      desc="La que te dijimos que no olvidaras."
+    />
+
+    <Button type="submit" class="w-full"> Ingresar </Button>
   </form>
 </template>
