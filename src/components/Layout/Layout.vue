@@ -1,6 +1,13 @@
 <script setup lang="ts">
 import { RouterView } from "vue-router";
+
 import { Toaster } from "@/components/ui/toast";
+import { Toaster as Sonner } from "@/components/ui/sonner";
+import { Button } from "@/components/ui/button";
+
+import { useAuthStore } from "../../store/auth";
+
+const { isAuth, logout } = useAuthStore();
 </script>
 
 <template>
@@ -13,21 +20,26 @@ import { Toaster } from "@/components/ui/toast";
           >merca-cell-bs</RouterLink
         >
 
-        <nav class="flex gap-4">
+        <nav class="flex gap-4 items-center">
           <RouterLink
             :to="{ name: 'home' }"
             activeClass="text-primary font-bold"
             >Home</RouterLink
           >
           <RouterLink
+            v-if="isAuth"
             :to="{ name: 'admin' }"
             activeClass="text-primary font-bold"
             >Admin</RouterLink
           >
           <RouterLink
+            v-if="!isAuth"
             :to="{ name: 'login' }"
             activeClass="text-primary font-bold"
             >Login</RouterLink
+          >
+          <Button v-else variant="destructive" :onclick="logout"
+            >Cerrar session</Button
           >
         </nav>
       </div>
@@ -36,5 +48,6 @@ import { Toaster } from "@/components/ui/toast";
       <RouterView />
     </main>
     <Toaster />
+    <Sonner richColors />
   </section>
 </template>

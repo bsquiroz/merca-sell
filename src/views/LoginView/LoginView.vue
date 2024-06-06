@@ -3,12 +3,14 @@ import { useForm } from "vee-validate";
 import { toTypedSchema } from "@vee-validate/zod";
 import * as z from "zod";
 
-import { Button } from "@/components/ui/button";
-import { toast } from "@/components/ui/toast";
 import Input from "../../components/common/Input/Input.vue";
+import Loading from "../../components/common/Loading/Loading.vue";
+import { Button } from "@/components/ui/button";
 import { useAuthStore } from "@/store/auth";
+import { ref } from "vue";
 
 const authStore = useAuthStore();
+const loadingLogin = ref(false);
 
 const formSchema = toTypedSchema(
   z.object({
@@ -21,12 +23,10 @@ const { handleSubmit } = useForm({
   validationSchema: formSchema,
 });
 
-const onSubmit = handleSubmit((values) => {
-  authStore.signIn(values.username, values.password);
-
-  toast({
-    title: "Your credentials corrects",
-  });
+const onSubmit = handleSubmit(async (values) => {
+  loadingLogin.value = true;
+  await authStore.signIn(values.username, values.password);
+  loadingLogin.value = false;
 });
 </script>
 
@@ -48,6 +48,9 @@ const onSubmit = handleSubmit((values) => {
       desc="La que te dijimos que no olvidaras."
     />
 
-    <Button type="submit" class="w-full"> Ingresar </Button>
+    <Button type="submit" class="w-full">
+      <Loading v-if="loadingLogin" />
+      <span v-else>Login</span>
+    </Button>
   </form>
 </template>
