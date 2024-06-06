@@ -28,7 +28,7 @@ const { isAuth, logout } = useAuthStore();
           >
           <RouterLink
             v-if="isAuth"
-            :to="{ name: 'admin' }"
+            :to="{ name: 'admin-list' }"
             activeClass="text-primary font-bold"
             >Admin</RouterLink
           >
