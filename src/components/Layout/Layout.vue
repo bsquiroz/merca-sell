@@ -17,7 +17,7 @@ const { isAuth, logout } = useAuthStore();
         <RouterLink
           :to="{ name: 'home' }"
           class="font-extrabold text-xl uppercase"
-          >merca-cell-bs</RouterLink
+          >merca sell <span class="text-primary">bs</span></RouterLink
         >
 
         <nav class="flex gap-4 items-center">
